@@ -1,6 +1,6 @@
 var app = angular.module("app", ['ngRoute']);
 
-app.config(function ($routeProvider){
+app.config(['$routeProvider', function ($routeProvider){
 
  	$routeProvider.
  		when('/', {
@@ -15,7 +15,7 @@ app.config(function ($routeProvider){
 	     	templateUrl:'scripts/views/home.html'
 	  	});
 
-});
+}]);
 
 app.controller("listController", ['$scope','$routeParams','$location','$window', function($scope,$routeParams,$location,$window){
 	$scope.contacts = contactsList;
@@ -34,7 +34,8 @@ app.controller("contactController", ['$scope','$routeParams','$location','$windo
 		if(confirm("Are you sure?")){
 			$scope.contacts.splice(id-1,1);
 			//$location.url('/#home.html/');
-			$location.path('/');
+			//$location.path('//');
+			window.location = "#/";
 		    //$scope.$apply();
 			//$window.location.href = '/home.html/';
 			//$window.location.href= "#/home.html";
