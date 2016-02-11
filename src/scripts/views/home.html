@@ -12,7 +12,7 @@
 			</div>
 
 			<div class="list-group">
-				<a href="#/contact/{{$index}}" class="list-group-item" ng-repeat="contact in contacts">
+				<a href="#/contact/{{contact.$id}}" class="list-group-item" ng-repeat="(key, contact) in contacts">
 					<h3 class="theme-color list-group-item-heading">{{ contact.name }}</h3>
 					<p class="list-group-item-text">
 						<span class="contact-detail"><span class="glyphicon glyphicon-envelope"></span> {{ contact.email }}</span>
