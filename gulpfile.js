@@ -1,25 +1,36 @@
 // include gulp
 var gulp = require('gulp'); 
+var concat = require('gulp-concat'); 
+var runSequence = require('run-sequence'); 
 
-// include plug-ins
-var jshint = require('gulp-jshint');
-var changed = require('gulp-changed');
-var imagemin = require('gulp-imagemin');
+var depsJS  = ['bower_components/angular/angular.min.js',
+				'bower_components/angular-route/angular-route.min.js',
+				'bower_components/firebase/firebase.js',
+				'bower_components/angularfire/dist/angularfire.min.js',
+				'bower_components/jquery/dist/jquery.min.js',
+				'bower_components/bootstrap/dist/js/bootstrap.min.js'];
 
-// JS hint task
-gulp.task('jshint', function() {
-  gulp.src('./src/scripts/*.js')
-    .pipe(jshint())
-    .pipe(jshint.reporter('default'));
+var appJS  = ['src/scripts/app.js',
+				'src/scripts/services/dataBase.js',
+				'src/scripts/controllers/HomeController.js',
+				'src/scripts/controllers/ContactController.js'];
+
+//tasks
+gulp.task('devDeps', function() 
+{
+  var depsjs = gulp.src(depsJS);
+  return depsjs.pipe(concat('bowerDependencies.js'))
+  				.pipe(gulp.dest('src'));
 });
 
-// minify new images
-gulp.task('imagemin', function() {
-  var imgSrc = './src/images/**/*',
-      imgDst = './build/images';
+gulp.task('devJS', function() 
+{
+  var js = gulp.src(appJS);
+  return js.pipe(concat('appDependencies.js'))
+  				.pipe(gulp.dest('src'));
+});
 
-  gulp.src(imgSrc)
-    .pipe(changed(imgDst))
-    .pipe(imagemin())
-    .pipe(gulp.dest(imgDst));
+gulp.task('default', function(callback)
+{
+	runSequence('devDeps', 'devJS', callback);
 });
