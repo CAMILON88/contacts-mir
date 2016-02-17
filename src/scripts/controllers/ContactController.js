@@ -26,7 +26,8 @@ app.controller("ContactController", ['$scope','$routeParams','$location','dbServ
 		$scope.contacts.$save(contact);
 		$location.url('/#');
 	};
-	$scope.deleteContact = function(id){
+	$scope.deleteContact = function(id, event){
+		event.preventDefault();
 		if(confirm("Are you sure?")){
 			$scope.contacts.$remove(getContact(id));
 			$location.url('/#');
